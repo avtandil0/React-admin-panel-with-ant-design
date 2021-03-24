@@ -1,7 +1,8 @@
 import './Layout.css'
 import React, { Fragment, useState } from 'react'
 import 'antd/dist/antd.css'
-import {Menu, Avatar} from 'antd'
+import { Menu, Avatar, Dropdown } from 'antd'
+import { DownOutlined } from '@ant-design/icons';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -10,20 +11,20 @@ import {
 
 
 export default function HeaderMenu(props) {
-    let theme,  switcher, headerColor
-    
+    let theme, switcher, headerColor
+
     if (props.colorMode === 'dark') {
-        theme = 'dark';  
+        theme = 'dark';
         switcher = 'white';
         headerColor = '#001529';
     }
 
     if (props.colorMode === 'light') {
-        theme = 'light'; 
-        switcher = 'black';
-        headerColor = 'white';
+        theme = 'light';
+        switcher = 'white';
+        headerColor = '#1E88E5';
     }
-    
+
     const { SubMenu } = Menu
 
     const [collapsed, setCollapsed] = useState(true)
@@ -33,23 +34,28 @@ export default function HeaderMenu(props) {
         props.siderMenuStyleChange(item)
     }
 
+    const menu = (
+        <Menu>
+            <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                    sign out
+            </a>
+            </Menu.Item>
+
+        </Menu>
+    );
 
     const rightContent = [
-        <Menu key="user" mode="horizontal" theme={theme} >
+        <Menu key="user" style={{ backgroundColor: headerColor, color: 'white' }} >
             <SubMenu
                 title={
-                    <Fragment>
-                        <span style={{ color: '#999', marginRight: 4 }}>
-                            <span>Hi,</span>
-                        </span>
-                        <span>username</span>
-                        <Avatar style={{ marginLeft: 8 }} />
-                    </Fragment>
+                    <Dropdown overlay={menu}>
+                        <a style={{ color: 'white' }}>
+                            Hover me <DownOutlined />
+                        </a>
+                    </Dropdown>
                 }
             >
-                <Menu.Item key="SignOut">
-                    <span>Sign out</span>
-                </Menu.Item>
             </SubMenu>
         </Menu>
     ]
